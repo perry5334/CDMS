@@ -1,0 +1,56 @@
+/control/alias RUNID {ARG1}
+/control/multiply EVID {RUNID} 100
+
+/CDMS/Physics/DMC
+
+/CDMS/Lab NoLab
+/CDMS/Detector zip
+/CDMS/Zip/MakeHousing
+
+/CDMS/Zip/DetectorConfig HV100mmSi
+/CDMS/Source contam
+/CDMS/Contaminant/bulk
+/CDMS/Contaminant/Volume Zip
+/CDMS/Contaminant/Generator dmcgun
+/CDMS/Contaminant/energy 1 keV
+/CDMS/Contaminant/partition
+
+/CDMS/Zip/UseLattice
+/CDMS/Zip/UseEMField
+/CDMS/Zip/EMField/Voltage 0 V -1
+
+#/CDMS/Zip/EMField/NodesFile /project/6049244/perry/samples/HV100mm_Ge71/EPotFiles/HV100mm/EPot_points.txt -1
+#/CDMS/Zip/EMField/TetraFile /project/6049244/perry/samples/HV100mm_Ge71/EPotFiles/HV100mm/EPot_tetra.txt -1
+
+/g4cmp/samplingEnergy 100 eV
+/g4cmp/phononBounces 20000
+/g4cmp/combiningStepLength 2 mm
+
+/CDMS/Physics/ApplyProductionCuts true
+/CDMS/Physics/ElectronCut 1 mm
+/CDMS/Physics/PositronCut 1 mm
+/CDMS/Physics/GammaCut 1 mm
+/CDMS/Physics/HadronCut 1e-9 mm
+
+/CDMS/updateGeom
+
+/CDMS/FETSim/Enable
+/CDMS/TESSim/Enable
+/CDMS/TESSim/PulseFitter ODE
+#/CDMS/TESSim/SetConstant W_gamma 324 J/(m^3*K^2)
+/CDMS/FETSim/PulseFitter Template
+
+/CDMS/writeData true
+/CDMS/writeTrees true
+/CDMS/writeEmptyEvents false
+/CDMS/writeEmptyHits false
+/CDMS/Output/Root/writeDMC true
+
+/CDMS/writeFilePrefix /project/6049244/perry/samples/HV100mm_Ge71/DMCOutput_1keV_50V_1Wgamma/HV100mm_10keV_0V
+
+/run/printProgress 3
+/run/numberOfThreads 20
+/run/setRunID {RUNID}
+/run/autoSeed
+/run/setEventID {EVID}
+/run/beamOn 100

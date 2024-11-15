@@ -1,0 +1,49 @@
+/CDMS/Physics/DMC
+
+/CDMS/Lab NoLab
+/CDMS/Detector zip
+/CDMS/Zip/MakeHousing
+
+/CDMS/Zip/DetectorConfig HV100mm
+/CDMS/Zip/UseLattice
+/CDMS/Zip/UseEMField
+/CDMS/Zip/EMField/Voltage 0 V -1
+/CDMS/updateGeom
+
+/CDMS/DMCreadback
+/CDMS/ReadDMC/InputFile /project/6049244/perry/samples/HV100mm_Ge71/DMCOutput_10keV_0V_1Wgamma/HV100mm_10keV_0V_51241008_000000_DMC.txt
+/CDMS/ReadDMC/UseInputEventID
+/CDMS/useSequentialID false
+/CDMS/ReadDMC/StartEventID 15
+
+/CDMS/FETSim/Enable
+/CDMS/TESSim/Enable
+/CDMS/TESSim/PulseFitter ODE
+/CDMS/TESSim/SavePowerProfile
+#/CDMS/TESSim/SaveTESState
+/CDMS/FETSim/PulseFitter Template
+
+#### New for tracking investigation ####
+/CDMS/StepCounter status
+/CDMS/StatusCounter/setParticleVolume phononTS *
+/CDMS/StatusCounter/setParticleVolume phononTF *
+/CDMS/StatusCounter/setParticleVolume phononL *
+/CDMS/StatusCounter/MinimumHitEnergy -1 eV
+/CDMS/StatusCounter/setStepStatus fGeomBoundary
+/CDMS/StatusCounter/setTrackStatus fStopAndKill
+/CDMS/StatusCounter/SaveCreatorProcess true
+#######################################
+
+#/CDMS/writeData false
+/CDMS/writeTrees true
+/CDMS/writeEmptyEvents false
+/CDMS/writeEmptyHits false
+#/CDMS/Output/Root/writeDMC true
+
+/CDMS/writeFilePrefix /project/6049244/perry/samples/HV100mm_Ge71/DMCOutput_10keV_0V_1Wgamma/HV100mm_10keV_0V_evt15
+
+/run/printProgress 3
+/run/numberOfThreads 1
+/run/setRunID 0000
+/run/autoSeed
+/run/beamOn 1
