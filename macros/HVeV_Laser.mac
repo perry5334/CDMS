@@ -1,0 +1,56 @@
+# Usage: CDMS_G4DMC HVeV_Laser_Point.mac
+#This macro simulates a point source of 1.95 eV photons within an HVeV NF-C chip.
+#See https://confluence.slac.stanford.edu/display/CDMS/Point+Source for more information and
+#options for point sources
+
+/CDMS/Physics/DMC
+/CDMS/Detector hvev
+/CDMS/HVeV/DetectorConfig NF-C
+/CDMS/HVeV/UseEMField
+/CDMS/HVeV/UseLattice
+/CDMS/HVeV/Lattice/Orientation 0 0 1 -1
+/CDMS/HVeV/EMField/Voltage {ARG1} V -1
+/CDMS/HVeV/EMField/VoltageOnly true -1
+
+/CDMS/HVeV/PhononAbsQETs 1.
+/CDMS/HVeV/PhononAbsTop 1.
+/CDMS/HVeV/PhononAbsSide 1.
+/CDMS/HVeV/PhononAbsBottom 1.
+
+/CDMS/Source point
+/CDMS/Point/Generator dmcgun
+/CDMS/Point/partition
+/CDMS/Point/energy 1.95 eV
+/CDMS/Point/Position 0 0 0 mm
+/CDMS/Point/Particles 1
+
+/CDMS/StepCounter hits
+/CDMS/HitCounter/setParticleVolume G4CMPDriftElectron *
+/CDMS/HitCounter/setParticleVolume G4CMPDriftHole *
+/CDMS/HitCounter/setParticleVolume phononTS *
+/CDMS/HitCounter/setParticleVolume phononTF *
+/CDMS/HitCounter/setParticleVolume phononL *
+/CDMS/HitCounter/MinimumHitEnergy -1 eV
+#/tracking/verbose 2
+
+/CDMS/updateGeom
+
+/g4cmp/enableFanoStatistics False
+/g4cmp/sampleLuke 0
+#/g4cmp/maxLukePhonons -1
+
+/CDMS/writeFilePrefix /scratch/user/perry5334/notebooks/MSC_NTLemission/runtime_samples/noIV_noLuke/noIV_noLuke_{ARG1}V
+#/CDMS/writeDMC true
+/CDMS/writeData false
+/CDMS/writeTrees true
+/CDMS/Output/Root/writeDMC true
+
+/run/autoSeed true
+/run/numberOfThreads 5
+/run/initialize
+/process/inactivate G4CMPInterValleyScattering
+/process/inactivate G4CMPLukeScattering
+
+/run/setRunID {ARG2}
+#/run/setEventID {ARG2}
+/run/beamOn 20

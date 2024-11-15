@@ -1,0 +1,51 @@
+/CDMS/Physics/DMC
+/CDMS/Detector hvev
+/CDMS/HVeV/DetectorConfig NF-C
+/CDMS/HVeV/UseEMField
+/CDMS/HVeV/UseLattice
+/CDMS/HVeV/Lattice/Orientation 0 0 1 -1
+/CDMS/HVeV/EMField/Voltage {ARG2} V -1
+/CDMS/HVeV/EMField/VoltageOnly true -1
+
+/CDMS/Source point
+/CDMS/Point/Generator gun
+/CDMS/Point/Particle {ARG3}
+/CDMS/Point/Direction 0 0 0     # Isotropic
+/CDMS/Point/Position 0 0 0 mm
+/CDMS/Point/Energy 1 eV
+
+/CDMS/HVeV/PhononAbsQETs 1.
+/CDMS/HVeV/PhononAbsTop 1.
+/CDMS/HVeV/PhononAbsSide 1.
+/CDMS/HVeV/PhononAbsBottom 1.
+
+/CDMS/StepCounter hits
+/CDMS/HitCounter/setParticleVolume G4CMPDriftElectron *
+/CDMS/HitCounter/setParticleVolume G4CMPDriftHole *
+/CDMS/HitCounter/setParticleVolume phononTS *
+/CDMS/HitCounter/setParticleVolume phononTF *
+/CDMS/HitCounter/setParticleVolume phononL *
+/CDMS/HitCounter/MinimumHitEnergy -1 eV
+/CDMS/HitCounter/SaveCreatorProcess true
+/tracking/verbose 2
+
+/CDMS/updateGeom
+
+/g4cmp/enableFanoStatistics False
+#/g4cmp/sampleLuke 0
+/g4cmp/maxLukePhonons -1
+
+/CDMS/writeFilePrefix /scratch/user/perry5334/notebooks/MSC_NTLemission/samples/e_1uV_creator_new/stepcounter
+#/CDMS/writeDMC true
+/CDMS/writeData false
+/CDMS/writeTrees true
+/CDMS/Output/Root/writeDMC true
+
+/run/autoSeed true
+/run/numberOfThreads 1
+/run/initialize
+/run/setRunID {ARG1}
+/run/setEventID {ARG1}
+/process/setVerbose 2 G4CMPLukeScattering
+/process/inactivate G4CMPInterValleyScattering
+/run/beamOn 1
