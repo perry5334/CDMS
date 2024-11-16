@@ -1,0 +1,49 @@
+/CDMS/Physics/DMC                              #Creating Detector Monte Carlo (DMC)
+
+/CDMS/Detector hvev                            #Using the HVeV detector
+/CDMS/HVeV/DetectorConfig NF-C                 #Using the NF-C detector layout
+/CDMS/HVeV/UseEMField                          #Turns on EM field (Allows holes to drift)
+/CDMS/HVeV/UseLattice                          #Turns on lattice to track kinematics of source and phonons
+/CDMS/HVeV/Lattice/Orientation 0 0 1 -1        #Determines orientation of lattice
+/CDMS/HVeV/EMField/Voltage -100 V -1           # Electric field at -100V along +Z axis
+/CDMS/HVeV/EMField/VoltageOnly true -1         # Suppresses other sources of EM fields
+/CDMS/HVeV/TESsubgapAbsorption 0.0365
+/CDMS/HVeV/PhononAbsTop 0.54
+/CDMS/Materials/AddPropertyValue G4_Al gapEnergy 1075e-6 eV
+
+
+/CDMS/Source contam                             #Source of phonon pulses are contaminants
+/CDMS/Contaminant/Generator dmcgun              #Produce phonons for the HVeV detector simulation
+/CDMS/Contaminant/Volume HVeV                   #Using the HVeV detector volume
+/CDMS/Contaminant/surface                       #Contaminant decays at the surface only
+/CDMS/Contaminant/partition                     #Treats particles seperately? (Not sure)
+/CDMS/Contaminant/energy 1.95 eV                #Sets kinetic energy of particle to 1.95eV
+/CDMS/Contaminant/Limit rho < 3 mm L            #Limits interaction to within 3mm radius in the Local coordinate system
+/CDMS/Contaminant/Limit z > 1.95 mm L           #Limits interaction to positions greater than z=1.95 mm in the Local coordinate system
+/CDMS/Contaminant/SkinFunction exp              #Exponential depth distribution
+/CDMS/Contaminant/SkinDepth 5.3 um              #Implantation scale for sources below surface
+/CDMS/Contaminant/Particles/Poisson 1           #Generate varying number of primary particles per event, from Poisson distribution with average number=1
+/CDMS/updateGeom                                #Updates the simulation with the defined geometry
+
+/CDMS/TESSim/Enable                             #Enables simulation of TES
+/CDMS/TESSim/ConstantsFile /scratch/user/perry5334/notebooks/HVeV_CrystalSimParams/samples/TESConstants_NFC  #Calls in default TES constants
+/CDMS/TESSim/SetConstant Tc 84.5e-3 K
+/CDMS/TESSim/SetConstant Tw 2.45e-3 K
+/CDMS/TESSim/SetConstant Tsubst 67.25e-3 K
+/CDMS/TESSim/SetConstant W_gamma 100 J/(m^3*K^2)
+/CDMS/TESSim/SetConstant L 1250e-9 henry
+
+/g4cmp/phononBounces 300                        #Max number of phonon bounces
+/g4cmp/enableFanoStatistics False               #Disables Feno Statistics
+
+/CDMS/writeFilePrefix /scratch/user/perry5334/notebooks/test          #Outputs the files as "Arg1.root" in scratch directory
+
+/CDMS/writeChannels true                        #Write data for DMC simulated pulses in each event
+/CDMS/writeDMC false                            #Does not write data for DMC electrode hits 
+/CDMS/writeData false                           #Does not write data to ASCII file (Use ROOT instead)
+/CDMS/writeTrees true                           #Creates TTrees for ROOT file
+/CDMS/Output/Root/writeDMC true                 #Includes phonon and charge-carrier hits in the ROOT 'mczip' trees
+/run/autoSeed true                              #Generates globally unique random seed (randomizes process)
+/run/numberOfThreads 1                         #Runs job with 20 threads
+/run/setRunID 0000                            #Sets run number for job
+/run/beamOn 1                              #Sets the number of particles (How many poisson distributions are created)
