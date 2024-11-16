@@ -1,0 +1,42 @@
+# figure Look
+figure.figsize: 4, 3
+
+axes.grid: False
+font.size: 14
+
+ytick.left: True
+xtick.bottom: True
+image.cmap: inferno
+lines.markersize: 6
+
+# turn on scientic notation
+axes.formatter.limits: -1, 1
+
+# set text objects edidable in Adobe Illustrator
+pdf.fonttype : 42
+ps.fonttype: 42
+
+# no background
+savefig.transparent: True
+
+#remove white spaces
+savefig.bbox: tight
+
+# resolution 
+figure.dpi: 200
+
+# no latex useth
+text.usetex: False
+
+# default color cycle
+axes.prop_cycle : cycler('color', ["263238","37474F","455964","546E7A","617D8B","798F9C","91A3AE","B1BEC5","CFD8DB"])
+
+
+# remove legend frame
+legend.frameon : False
+
+# svg font type
+svg.fonttype: none
+
+yaxis.labellocation: top
+xaxis.labellocation: right
