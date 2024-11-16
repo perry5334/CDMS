@@ -1,0 +1,41 @@
+# Usage: CDMS_G4DMC sim-fiducial.mac <det> <Egamma-keV> <events>
+#
+# Generate template-scaled pulses using the FastDMC framework.  With both
+# charge and phonon models, should approximate the "SimFiducial" shape,
+# at least for germanium detectors.
+#
+# Only detector types which have both TESTemplates and FETTemplates can
+# be used for this; avoid the SNOLAB detectors.
+#
+# 20231009  Michael Kelsey
+
+/control/alias RUNID {ARG1}
+/control/multiply EVID {RUNID} 1000
+
+/CDMS/Physics/FastDMC
+
+/CDMS/Detector Zip
+/CDMS/Zip/DetectorConfig iZIP7
+/CDMS/Zip/EMField/VoltageOnly true 0	# Don't need complicated EPot field
+/CDMS/updateGeom
+
+/CDMS/TESSim/Enable
+/CDMS/FETSim/Enable
+
+/CDMS/Source sphere
+/CDMS/Sphere/Radius 60 mm
+/CDMS/Sphere/AlignToVolume Zip
+/CDMS/Sphere/Inward
+/CDMS/Sphere/AddSpectrum Ba133
+
+/CDMS/writeFilePrefix hits/single/FastDMC_Ba133_{RUNID}/DMCoutputs/FastDMC_Ba133
+/CDMS/writeData false
+/CDMS/writeTrees true
+/CDMS/writeEmptyEvents true
+/CDMS/writeEmptyHits true
+
+/run/autoSeed true
+/run/numberOfThreads 10
+/run/setRunID {RUNID}
+#/run/setEventID {EVID}
+/run/beamOn 1000

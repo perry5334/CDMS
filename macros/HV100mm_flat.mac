@@ -1,0 +1,49 @@
+/control/alias RUNID {ARG1}
+/control/multiply EVID {RUNID} 1000
+
+/CDMS/Physics/FastDMC
+
+/CDMS/Lab NoLab
+/CDMS/Detector zip
+/CDMS/Zip/MakeHousing
+
+/CDMS/Zip/DetectorConfig HV100mm
+/CDMS/Source contam
+/CDMS/Contaminant/bulk
+/CDMS/Contaminant/Volume Zip
+/CDMS/Contaminant/Generator dmcgun
+/CDMS/Contaminant/energyRange 0.05 2 keV # 50 eV - 2 keV
+
+/CDMS/Zip/UseLattice
+/CDMS/Zip/UseEMField
+
+# Cuts and downsampling not needed for FastDMC
+#/g4cmp/samplingEnergy 100 eV
+#/g4cmp/phononBounces 20000
+#/g4cmp/combiningStepLength 2 mm
+
+#/CDMS/Physics/ApplyProductionCuts true
+#/CDMS/Physics/ElectronCut 1 mm
+#/CDMS/Physics/PositronCut 1 mm
+#/CDMS/Physics/GammaCut 1 mm
+#/CDMS/Physics/HadronCut 1e-9 mm
+/CDMS/updateGeom
+
+/CDMS/FETSim/Enable
+/CDMS/TESSim/Enable
+#/CDMS/TESSim/PulseFitter ODE
+#/CDMS/FETSim/PulseFitter Template
+
+/CDMS/writeData true
+/CDMS/writeTrees true
+/CDMS/writeEmptyEvents false
+/CDMS/writeEmptyHits false
+
+/CDMS/writeFilePrefix /scratch/user/perry5334/Janices_stuff/hits/single/FastDMC_HV100mm_50eV-2keV_fix_9/output/HV100mm_50eV-2keV
+
+/run/printProgress 1
+/run/numberOfThreads 10
+/run/setRunID {RUNID}
+/run/autoSeed
+/run/setEventID {EVID}
+/run/beamOn 1000

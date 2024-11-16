@@ -1,0 +1,89 @@
+/control/alias RUNID {ARG1}
+/control/multiply EVID {RUNID} 100
+
+/CDMS/Physics/DMC
+
+/CDMS/Lab NoLab
+/CDMS/Detector zip
+/CDMS/Zip/MakeHousing
+
+/CDMS/Zip/DetectorConfig HV100mm
+/CDMS/Source contam
+/CDMS/Contaminant/bulk
+/CDMS/Contaminant/Volume Zip
+/CDMS/Contaminant/Generator dmcgun
+/CDMS/Contaminant/energy 100 eV
+/CDMS/Contaminant/partition
+#### new for tracking investigation ####
+# PA channel limits
+#/CDMS/Contaminant/Limit R >= 43.818 mm
+#/CDMS/Contaminant/Limit R <= 48.3 mm
+# PB channel limits
+#/CDMS/Contaminant/Limit R >= 39.192 mm
+#/CDMS/Contaminant/Limit R <= 43.818 mm
+########################################
+
+/CDMS/Zip/UseLattice
+/CDMS/Zip/UseEMField
+/CDMS/Zip/EMField/Voltage 0 V -1
+
+#/CDMS/Zip/EMField/NodesFile /scratch/user/perry5334/repositories/EPotFiles/HV100mm/EPot_points.txt -1
+#/CDMS/Zip/EMField/TetraFile /scratch/user/perry5334/repositories/EPotFiles/HV100mm/EPot_tetra.txt -1
+
+/g4cmp/samplingEnergy 100 eV
+/g4cmp/phononBounces 20000
+/g4cmp/combiningStepLength 2 mm
+
+#/CDMS/Zip/PhononAbsQETs 1.
+#/CDMS/Zip/PhononAbsTop 1.
+#/CDMS/Zip/PhononAbsSide 1.
+#/CDMS/Zip/PhononAbsBottom 1.
+
+/CDMS/Physics/ApplyProductionCuts true
+/CDMS/Physics/ElectronCut 1 mm
+/CDMS/Physics/PositronCut 1 mm
+/CDMS/Physics/GammaCut 1 mm
+/CDMS/Physics/HadronCut 1e-9 mm
+
+#### New for tracking investigation ####
+/CDMS/StepCounter hits
+/CDMS/HitCounter/setParticleVolume G4CMPDriftElectron *
+/CDMS/HitCounter/setParticleVolume G4CMPDriftHole *
+/CDMS/HitCounter/setParticleVolume phononTS *
+/CDMS/HitCounter/setParticleVolume phononTF *
+/CDMS/HitCounter/setParticleVolume phononL *
+/CDMS/HitCounter/MinimumHitEnergy -1 eV
+/CDMS/HitCounter/SaveCreatorProcess true
+
+#/CDMS/StepCounter status
+#/CDMS/StatusCounter/setParticleVolume G4CMPDriftElectron *
+#/CDMS/StatusCounter/setParticleVolume G4CMPDriftHole *
+#/CDMS/StatusCounter/setParticleVolume phononTS *
+#/CDMS/StatusCounter/setParticleVolume phononTF *
+#/CDMS/StatusCounter/setParticleVolume phononL *
+#/CDMS/StatusCounter/MinimumHitEnergy -1 eV
+#/CDMS/StatusCounter/setStepStatus fGeomBoundary
+#######################################
+
+/CDMS/updateGeom
+
+/CDMS/FETSim/Enable
+/CDMS/TESSim/Enable
+/CDMS/TESSim/PulseFitter ODE
+/CDMS/TESSim/SavePowerProfile
+/CDMS/FETSim/PulseFitter Template
+
+/CDMS/writeData true
+/CDMS/writeTrees true
+/CDMS/writeEmptyEvents false
+/CDMS/writeEmptyHits false
+/CDMS/Output/Root/writeDMC true # include mczip0 tree
+
+/CDMS/writeFilePrefix /scratch/user/perry5334/Janices_stuff/Ge71_Activation/DMCOutput_100eV_0V_tracks/HV100mm_100eV_0V
+
+/run/printProgress 3
+/run/numberOfThreads 10
+/run/setRunID {RUNID}
+/run/autoSeed
+/run/setEventID {EVID}
+/run/beamOn 10
