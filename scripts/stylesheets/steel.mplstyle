@@ -2,7 +2,7 @@
 figure.figsize: 4, 3
 
 axes.grid: False
-font.size: 14
+font.size: 10
 
 ytick.left: True
 xtick.bottom: True
