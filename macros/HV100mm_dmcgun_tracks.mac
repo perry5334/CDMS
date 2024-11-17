@@ -12,7 +12,7 @@
 /CDMS/Contaminant/bulk
 /CDMS/Contaminant/Volume Zip
 /CDMS/Contaminant/Generator dmcgun
-/CDMS/Contaminant/energy 100 eV
+/CDMS/Contaminant/energy 30 eV
 /CDMS/Contaminant/partition
 #### new for tracking investigation ####
 # PA channel limits
@@ -79,7 +79,7 @@
 /CDMS/writeEmptyHits false
 /CDMS/Output/Root/writeDMC true # include mczip0 tree
 
-/CDMS/writeFilePrefix /scratch/user/perry5334/Janices_stuff/Ge71_Activation/DMCOutput_100eV_0V_tracks/HV100mm_100eV_0V
+/CDMS/writeFilePrefix /scratch/user/perry5334/samples/DMC_SNOLAB_HV/HV100mm_30eV_0V_tracks/DMCOutput
 
 /run/printProgress 3
 /run/numberOfThreads 10
