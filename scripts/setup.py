@@ -26,7 +26,7 @@ def show_colors(stylesheet):
             
 # obtain and show the source macro given the root file path
 def getMacro(DMCfile):
-    f=TFile.Open(DMCfile)
+    f=ROOT.TFile.Open(DMCfile)
     macro=f.Get("G4SettingsInfoDir/SuperSim_Macro")
     macro.Print()
     
