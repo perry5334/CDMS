@@ -1,0 +1,21 @@
+/CDMS/Detector cute
+/CDMS/CUTE/Stack snolab
+/CDMS/UseShield
+/control/execute {CDMS_SUPERSIM}/CDMSgeometry/macros/CUTE_T3_stack.mac
+
+/CDMS/Source calib
+/CDMS/CalibSource/AddSpectrum Cf252N
+/CDMS/CalibSource/Pipe {PLACE}
+
+/CDMS/updateGeom
+
+/CDMS/writeFilePrefix /scratch/user/perry5334/notebooks/MSC_NTLemission/samples/e_1uV_creator_new/stepcounter
+/CDMS/writeData false
+/CDMS/writeTrees true
+
+/run/autoSeed true
+/run/numberOfThreads 20
+/run/initialize
+/run/setRunID 0
+/run/setEventID 0
+/run/beamOn 100
