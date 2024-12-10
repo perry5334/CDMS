@@ -4,12 +4,11 @@
 /control/execute {CDMS_SUPERSIM}/CDMSgeometry/macros/CUTE_T3_stack.mac
 
 /CDMS/Source calib
-/CDMS/CalibSource/AddSpectrum Cf252N
-/CDMS/CalibSource/Pipe {PLACE}
+/CDMS/CalibSource/AddIsotope 98 252
 
 /CDMS/updateGeom
 
-/CDMS/writeFilePrefix /scratch/user/perry5334/notebooks/MSC_NTLemission/samples/e_1uV_creator_new/stepcounter
+/CDMS/writeFilePrefix /scratch/user/perry5334/samples/DMC_SNOLAB_HV/DMCOutput/CUTE_Cf252calib_source
 /CDMS/writeData false
 /CDMS/writeTrees true
 
