@@ -19,16 +19,20 @@
 #/run/setEventID 0
 #/run/beamOn 100
 
-/vis/open OGLIX 600x600-0+0
-/vis/verbose errors
-/vis/viewer/set/style wireframe
-/vis/viewer/set/autoRefresh false
-/vis/viewer/set/upVector 0 0 1
-/vis/viewer/set/viewpointThetaPhi 70 0		# Looking down from above
-/vis/drawVolume
+#/vis/open OGLIX 600x600-0+0
+#/vis/verbose errors
+#/vis/viewer/set/style wireframe
+#/vis/viewer/set/autoRefresh false
+#/vis/viewer/set/upVector 0 0 1
+#/vis/viewer/set/viewpointThetaPhi 90 0		# Looking down from above
+#/vis/drawVolume
 
-/vis/scene/add/axes 0 0 0 0.5 m
+#/vis/scene/add/axes 0 0 0 0.5 m
+#/vis/viewer/zoomTo 8.0
+#/vis/viewer/panTo 0 -0.35 m
 
-/vis/viewer/flush                           # always needed for OGL, OGLIX, only needed for HepRep, VRML if there is no /run/beamOn
-/vis/ogl/set/printFilename CUTEgeometry     # define file name for OGL, OGLIX
-/vis/ogl/printEPS                           # save eps file for OGL, OGLIX
+#/vis/viewer/flush                            # always needed for OGL, OGLIX, only needed for HepRep, VRML if there is no /run/beamOn
+#/vis/ogl/set/printFilename CUTEgeometry     # define file name for OGL, OGLIX
+#/vis/ogl/printEPS                           # save eps file for OGL, OGLIX
+
+/CDMS/CUTE/printParam innerLeadRadius
