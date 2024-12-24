@@ -1,5 +1,5 @@
 /control/alias RUNID {ARG1}
-/control/multiply EVID {RUNID} 100
+/control/multiply EVID {RUNID} 1000
 
 /CDMS/Physics/FastDMC
 
@@ -22,6 +22,14 @@
 
 /CDMS/FETSim/Enable
 /CDMS/TESSim/Enable
+/CDMS/TESSim/TriggerShift PAS1 -400 us 0
+/CDMS/TESSim/TriggerShift PBS1 -300 us 0
+/CDMS/TESSim/TriggerShift PCS1 -200 us 0
+/CDMS/TESSim/TriggerShift PDS1 -100 us 0
+/CDMS/TESSim/TriggerShift PAS2  400 us 0
+/CDMS/TESSim/TriggerShift PBS2  300 us 0
+/CDMS/TESSim/TriggerShift PCS2  200 us 0
+/CDMS/TESSim/TriggerShift PDS2  100 us 0
 
 /CDMS/writeData true
 /CDMS/writeTrees true
@@ -29,7 +37,7 @@
 /CDMS/writeEmptyHits false
 /CDMS/Output/Root/writeDMC true
 
-/CDMS/writeFilePrefix /scratch/user/perry5334/samples/DMC_SNOLAB_HV/HV100mm_1keV_100V_FastDMC/DMCOutput/HV100mm_1keV_100V
+/CDMS/writeFilePrefix /scratch/user/perry5334/samples/DMC_SNOLAB_HV/HV100mm_1keV_100V_FastDMC/DMCOutput/HV100mm_1keV_100V_trigShift
 
 /run/printProgress 3
 /run/numberOfThreads 10
