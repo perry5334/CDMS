@@ -1,0 +1,39 @@
+/control/alias RUNID {ARG1}
+/control/multiply EVID {RUNID} 100
+
+/CDMS/Physics/FastDMC
+
+/CDMS/Lab NoLab
+/CDMS/Detector zip
+/CDMS/Zip/MakeHousing
+
+/CDMS/Zip/DetectorConfig HV100mm
+/CDMS/Source contam
+/CDMS/Contaminant/bulk
+/CDMS/Contaminant/Volume Zip
+/CDMS/Contaminant/Generator dmcgun
+/CDMS/Contaminant/energy 1 keV
+
+/CDMS/Zip/UseLattice
+/CDMS/Zip/UseEMField
+/CDMS/Zip/EMField/Voltage 100 V -1
+
+/CDMS/updateGeom
+
+/CDMS/FETSim/Enable
+/CDMS/TESSim/Enable
+
+/CDMS/writeData true
+/CDMS/writeTrees true
+/CDMS/writeEmptyEvents false
+/CDMS/writeEmptyHits false
+#/CDMS/Output/Root/writeDMC true
+
+/CDMS/writeFilePrefix /project/6049244/perry/samples/DMC_SNOLAB_HV/DMCOutput/HV100mm_1keV_100V_FastDMC/HV100mm_1keV_100V
+
+/run/printProgress 3
+/run/numberOfThreads 10
+/run/setRunID {RUNID}
+/run/autoSeed
+/run/setEventID {EVID}
+/run/beamOn 10000
