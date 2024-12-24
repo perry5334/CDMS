@@ -27,13 +27,13 @@
 /CDMS/writeTrees true
 /CDMS/writeEmptyEvents false
 /CDMS/writeEmptyHits false
-#/CDMS/Output/Root/writeDMC true
+/CDMS/Output/Root/writeDMC true
 
-/CDMS/writeFilePrefix /project/6049244/perry/samples/DMC_SNOLAB_HV/DMCOutput/HV100mm_1keV_100V_FastDMC/HV100mm_1keV_100V
+/CDMS/writeFilePrefix /scratch/user/perry5334/samples/DMC_SNOLAB_HV/HV100mm_1keV_100V_FastDMC/DMCOutput/HV100mm_1keV_100V
 
 /run/printProgress 3
 /run/numberOfThreads 10
 /run/setRunID {RUNID}
 /run/autoSeed
 /run/setEventID {EVID}
-/run/beamOn 10000
+/run/beamOn 1000

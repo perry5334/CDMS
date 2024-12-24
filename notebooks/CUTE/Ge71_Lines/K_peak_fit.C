@@ -9,7 +9,65 @@
 #include "TCanvas.h"
 #include "TAxis.h"
 #include "RooPlot.h"
+#include <TFile.h>
+#include <TTree.h>
+#include <TH1F.h>
+#include <TBranch.h>
+#include <TCanvas.h>
 using namespace RooFit ;
+
+
+void K_peak_fit() {
+    // Open the ROOT file
+    TFile* file = TFile::Open("K_shell_OF.root");
+
+    // Check if the file was opened successfully
+    if (!file || file->IsZombie()) {
+        std::cerr << "Error opening file!" << std::endl;
+        return;
+    }
+
+    // Get the tree from the directory rqDir
+    TTree* tree = (TTree*)file->Get("rqDir/zip1");
+
+    // Check if the tree exists
+    if (!tree) {
+        std::cerr << "Error: Tree not found!" << std::endl;
+        return;
+    }
+
+    // Create a branch object to store the data from the branch "PTOFamps"
+    std::vector<float> PTOFamps;  // Store branch data in this vector
+    TBranch* branch = tree->GetBranch("PTOFamps");
+
+    // Set the branch address so we can read its data
+    branch->SetAddress(&PTOFamps);
+
+    // Create a histogram to fill with the data from PTOFamps
+    TH1F* hist = new TH1F("PTOFamps_hist", "Histogram of PTOFamps", 40, 22, 30);
+
+    // Loop over the tree entries and fill the histogram
+    Long64_t nEntries = tree->GetEntries();
+    for (Long64_t i = 0; i < nEntries; i++) {
+        tree->GetEntry(i);  // Load the entry from the tree
+        for (size_t j = 0; j < PTOFamps.size(); j++) {
+            hist->Fill(PTOFamps[j]);
+        }
+    }
+
+    // Draw the histogram
+    TCanvas* canvas = new TCanvas("canvas", "Canvas", 800, 600);
+    hist->Draw();
+
+    // Save the histogram to a file (optional)
+    hist->SaveAs("K_shell_PTOFamps_hist.png");
+
+    // Clean up
+    file->Close();
+}
+
+
+
 void K_shell_fit()
 {
    // S e t u p   c o m p o n e n t   p d f s 
