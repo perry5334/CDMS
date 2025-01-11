@@ -1,0 +1,47 @@
+#/control/alias RUNID {ARG1}
+#/control/multiply EVID {RUNID} 1000000
+#/control/alias EVID {ARG2}
+
+/CDMS/Detector cute
+/CDMS/CUTE/Tower snolab
+/CDMS/UseShield
+/control/execute {CDMS_SUPERSIM}/CDMSgeometry/macros/CUTE_T3_stack.mac
+/CDMS/Zip/UseElectrodeMask false
+
+/CDMS/Source snocap
+/CDMS/SnoCap/Position 224.25 0 -205.2 mm
+#/CDMS/SnoCap/AddIsotope 98 252
+/CDMS/SnoCap/AddSpectrum Cf252N
+
+/CDMS/updateGeom
+
+#/CDMS/writeFilePrefix /scratch/user/perry5334/samples/DMC_SNOLAB_HV/CUTE_Cf252calib_source/DMCOutput_EmptyEvents_Spectrum/CUTE_Cf252
+#/CDMS/writeData true
+#/CDMS/writeTrees true
+#/CDMS/writeEmptyHits false
+#/CDMS/writeEmptyEvents true
+
+#### visualization ####
+
+/vis/open HepRepFile
+/vis/verbose errors
+/vis/viewer/set/style wireframe
+/vis/viewer/set/upVector 0 0 1
+/vis/drawVolume
+
+#/vis/scene/add/axes 0 0 0 0.5 m
+/vis/scene/add/trajectories                 # adds particles tracks to the visualization
+/vis/scene/endOfEventAction accumulate      # adds the particle tracks of all events together in one file instead of creating one file per event
+
+/vis/viewer/flush
+
+#######################
+
+/run/autoSeed true
+#/run/numberOfThreads 20
+/run/initialize
+#/run/setRunID {RUNID}
+#/run/setEventID {EVID}
+/run/beamOn 20
+
+#/vis/viewer/flush

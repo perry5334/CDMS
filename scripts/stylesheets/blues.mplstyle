@@ -29,7 +29,7 @@ figure.dpi: 200
 text.usetex: False
 
 # default color cycle
-axes.prop_cycle : cycler('color', ["A1BCE5","4D6BD1","2F47A7"])
+axes.prop_cycle : cycler('color', ["A1BCE5","6F99D8","356CC0","1A3660"])
 
 
 # remove legend frame
