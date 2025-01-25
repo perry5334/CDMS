@@ -1,0 +1,20 @@
+#!/bin/bash
+##NECESSARY JOB SPECIFICATIONS
+#SBATCH --time=01:00:00              #Set the wall clock limit
+#SBATCH --mem=10GB                  #Request memory
+#SBATCH --nodes=1
+#SBATCH --tasks-per-node=1
+#SBATCH --cpus-per-task=2
+#SBATCH -o /scratch/user/perry5334/slurm/output/%A_%a.out
+#SBATCH -e /scratch/user/perry5334/slurm/error/%A_%a.err
+##OPTIONAL JOB SPECIFICATIONS
+[ -z $SLURM_ARRAY_TASK_ID ] && SLURM_ARRAY_TASK_ID=0
+
+#MEMORY PER CORE ON TERRA:
+#       64GB Node       128GB Node      96GB KNL Node           96GB KNL Node
+#       2048 MB         4096 MB         1300 MB                 1236 MB
+echo "Starting script"
+
+module load scdms-singularity/V05-05
+
+singularity exec $SCDMS_IMAGE python3 /scratch/user/perry5334/CDMS/notebooks/CUTE/Ge71_Lines/SimData_Filter.py $1 $2
