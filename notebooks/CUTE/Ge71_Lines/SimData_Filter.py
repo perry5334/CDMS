@@ -52,7 +52,7 @@ def createFilter_EvtNum():
 
 def filter_snapshot(start, stop):
     path = '/scratch/group/mitchcomp/CDMS/data/perry5334/SourceSimOutput_decayAncestor_Isotope/'
-    branches = ['EventNum', 'PName', 'KE', 'Edep', 'Time1', 'Time3', 'X1', 'Y1', 'Z1', 'X3', 'Y3', 'Z3']
+    branches = ['EventNum', 'PName', 'Parent', 'KE', 'Edep', 'Time1', 'Time3', 'X1', 'Y1', 'Z1', 'X3', 'Y3', 'Z3']
     DMCfiles = np.sort(glob.glob(path + f'CUTE_Cf252_????????_??????.root'))[start: stop]
 
     det = 1
@@ -70,10 +70,10 @@ def filter_snapshot(start, stop):
 
     for file in range(len(DMCfiles)):
         print(file)
-        frame = CDataFrame(f"G4SimDir/mczip1", [DMCfiles[file]])
-        frame_filtered = frame.Filter('string(decayAncestor.PName.data()) == "Ge71"')
+        frame = CDataFrame(f"G4SimDir/mcDecays", [DMCfiles[file]])
+        frame_filtered = frame.Filter('DetNum==1').Filter('string(decayAncestor.PName.data()) == "Ge71"')
 
-        frame_filtered.Snapshot("mczip1", path+"mczip1/mczip1_GeActivation_ancestorGe71_" + "%06d" % (start + file,) + ".root", branches)
+        frame_filtered.Snapshot("mcDecays1", path+"mcDecays1/mcDecays1_GeActivation_ancestorGe71_" + "%06d" % (start + file,) + ".root", branches)
 
 if __name__ == '__main__':
     main()
