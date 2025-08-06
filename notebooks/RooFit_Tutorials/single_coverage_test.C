@@ -1,19 +1,21 @@
 #include "RooRealVar.h"
 #include "RooDataSet.h"
-#include "RooGaussian.h"
+//#include "RooGaussian.h"
 #include "TCanvas.h"
 #include "RooPlot.h"
 #include "TAxis.h"
 #include <iostream>
 #include <stdio.h>
 #include <stdlib.h>
-using namespace RooFit;
-using namespace std;
 
-void single_bias_test()
+using namespace std;
+using namespace ROOT;
+using namespace RooFit;
+using namespace RooStats;
+
+
+void single_coverage_test()
 {
-	// 1. Defining and combining PDFs
-        // ------------------------------
 
         // Declare variables x, mean, sigma, tau, with associated name, title,
         // initial value and allowed range
@@ -42,7 +44,7 @@ void single_bias_test()
     	RooMsgService::instance().setSilentMode(kTRUE);
 
 
-	int samples=10000;
+	int samples=1000;
 	double n_tot = 1000;
 	double n_s_true = 0.3;
 	double n_b_true = 1. - n_s_true;
@@ -50,7 +52,7 @@ void single_bias_test()
 	double n_b_events = n_tot*n_b_true;
 	double progress;
 
-	TH1F* n_s_pull = new TH1F("sig_pull", "Bias check;(nsig_{fit}-nsig_{true})/#Delta nsig_{fit};frequency",100,-10,10);
+	TH1F* n_s_coverage = new TH1F("sig_coverage", "Coverage Test;UL;frequency",100,0,1);
 
 
 	for(int i=0;i<samples;i++){
@@ -66,13 +68,17 @@ void single_bias_test()
 		d_sb.add(*d_s);
 		d_sb.add(*d_b);
 
-		//fit to generated data
-		RooAbsReal* nll = Model.createNLL(d_sb);
-       		RooMinimizer m(*nll);
-        	m.migrad();
+		// Do a PLC fit 
+        	ProfileLikelihoodCalculator *PLC;
+		PLC = new ProfileLikelihoodCalculator(d_sb,Model,RooArgSet(n_s)); // set up the profile likelihood. Our parameter of interest is the DM cross section
+        
+        	PLC->SetConfidenceLevel(0.8);
+        	LikelihoodInterval *LI = PLC->GetInterval(); // get the likelihood interval object
+        	double ul = LI->UpperLimit(n_s);
 
-		//store pull values for n_s		
-		n_s_pull->Fill((n_s.getVal() - n_s_true)/n_s.getError());
+
+		//store UL values for n_s		
+		n_s_coverage->Fill(ul);
 
 		//counter
 		int barWidth = 70;
@@ -88,9 +94,9 @@ void single_bias_test()
 	}
 	std::cout<<std::endl;
 
-	TCanvas *c1 = new TCanvas("c1", "Pulls for nsig");
-	TH1F *frame1 = c1->DrawFrame(-5, 0, 5, 10);
-	frame1->SetXTitle("(nsig_{fit}-nsig_{true})/#Delta nsig_{fit}");
-	n_s_pull->Draw();
+	TCanvas *c1 = new TCanvas("c1", "Coverage for nsig");
+	TH1F *frame1 = c1->DrawFrame(0, 0, 1, 10);
+	frame1->SetXTitle("n_s coverage");
+	n_s_coverage->Draw();
 
 }
