@@ -17,4 +17,4 @@ echo "Starting script"
 
 module load scdms-singularity/V05-05
 
-singularity exec $SCDMS_IMAGE python3 /scratch/user/perry5334/CDMS/notebooks/CUTE/Ge71_Lines/SimData_Filter.py $1 $2
+singularity exec $SCDMS_IMAGE python3 /scratch/user/perry5334/CDMS/notebooks/CUTE/Ge71_Lines/SimData_Filter.py $1

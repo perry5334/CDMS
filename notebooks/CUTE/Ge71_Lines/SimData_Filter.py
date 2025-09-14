@@ -9,8 +9,10 @@ import glob
 
 def main():
 
-    start, stop = getargs()
-    filter_snapshot(int(start), int(stop))
+    #start, stop = getargs()
+    index = getargs()
+    #filter_snapshot(int(start), int(stop))
+    filter_snapshot(int(index))
 
 def getargs():
     """Return command line arguments to main function"""
@@ -21,9 +23,10 @@ def getargs():
         sys.exit(2)
 
     # Process command line arguments
-    start, stop = args[0], args[1]
+    #start, stop = args[0], args[1]
+    index = args[0]
     
-    return start, stop
+    return index #start, stop
 
 def createFilter_EvtNum_DetNum():
 
@@ -50,15 +53,15 @@ def createFilter_EvtNum():
 	}
 	""")
 
-def filter_snapshot(start, stop):
+def filter_snapshot(index):
     path = '/scratch/group/mitchcomp/CDMS/data/perry5334/SourceSimOutput_decayAncestor_Isotope/'
     branches = ['EventNum', 'PName', 'Parent', 'KE', 'Edep', 'Time1', 'Time3', 'X1', 'Y1', 'Z1', 'X3', 'Y3', 'Z3']
-    DMCfiles = np.sort(glob.glob(path + f'CUTE_Cf252_????????_??????.root'))[start: stop]
+    DMCfiles = [np.sort(glob.glob(path + f'CUTE_Cf252_????????_??????.root'))[index]]
 
-    det = 1
-    mczipFrame = CDataFrame(f"G4SimDir/mczip{det}", DMCfiles)
-    mcDecaysFrame = CDataFrame("G4SimDir/mcDecays", DMCfiles)
-    mcFluxCounterFrame = CDataFrame("G4SimDir/mcFluxCounter", DMCfiles)
+    det = 3
+    #mczipFrame = CDataFrame("G4SimDir/mczip"+str(int(det)), DMCfiles)
+    #mcDecaysFrame = CDataFrame("G4SimDir/mcDecays", DMCfiles)
+    #mcFluxCounterFrame = CDataFrame("G4SimDir/mcFluxCounter", DMCfiles)
 
     # Save array of events where neutron capture and Ge71 activation occurred. Determined by recoil/decay of Ga71 nucleus.
     #GeActivEvents = np.unique(mczipFrame.Filter('string(PName.data()) == "Ga71"').AsNumpy(['EventNum'])['EventNum'])
@@ -70,10 +73,10 @@ def filter_snapshot(start, stop):
 
     for file in range(len(DMCfiles)):
         print(file)
-        frame = CDataFrame(f"G4SimDir/mcDecays", [DMCfiles[file]])
-        frame_filtered = frame.Filter('DetNum==1').Filter('string(decayAncestor.PName.data()) == "Ge71"')
+        frame = CDataFrame(f"G4SimDir/mcDecays"+str(int(det)), [DMCfiles[file]])
+        frame_filtered = frame.Filter('DetNum=='+str(int(det))).Filter('string(decayAncestor.PName.data()) == "Ge71"')
 
-        frame_filtered.Snapshot("mcDecays1", path+"mcDecays1/mcDecays1_GeActivation_ancestorGe71_" + "%06d" % (start + file,) + ".root", branches)
+        frame_filtered.Snapshot("mcDecays"+str(int(det)), path+"mcDecays"+str(int(det))+"/mcDecays"+str(int(det))+"_GeActivation_ancestorGe71_" + "%06d" % (index + file,) + ".root", branches)
 
 if __name__ == '__main__':
     main()
