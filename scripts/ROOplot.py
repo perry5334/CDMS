@@ -29,7 +29,7 @@ class ROOplot:
             self.c.SetLogy()
         self.graphs = []
 
-    def createScatter(self, x, y, style=21, size=0.2, color=ROOT.kBlue, label=None):
+    def createScatter(self, x, y, style=21, size=0.2, color=ROOT.kBlue, label=None, alpha=1):
         
         g = ROOT.TGraph(len(x), x, y)
         g.SetTitle(self.title + ";" + self.xlabel + ";" + self.ylabel)
