@@ -29,12 +29,14 @@ class ROOplot:
             self.c.SetLogy()
         self.graphs = []
 
-    def createScatter(self, x, y, style=21, size=0.2, color=ROOT.kBlue, label=None, alpha=1):
+    def createScatter(self, x, y, style=21, width=0, size=0.2, color=ROOT.kBlue, label=None, alpha=1):
         
         g = ROOT.TGraph(len(x), x, y)
         g.SetTitle(self.title + ";" + self.xlabel + ";" + self.ylabel)
         g.SetMarkerStyle(style)
         g.SetMarkerSize(size)
+        g.SetLineWidth(width)
+        g.SetLineColor(color)
         g.SetMarkerColor(color)
         g.SetFillColor(color)
         g.GetXaxis().SetLabelSize(self.labelsize)
